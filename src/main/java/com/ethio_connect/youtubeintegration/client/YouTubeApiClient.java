@@ -1,5 +1,6 @@
 package com.ethio_connect.youtubeintegration.client;
 
+import com.ethio_connect.youtubeintegration.dto.VideoSearchRequest;
 import com.ethio_connect.youtubeintegration.dto.YouTubeResponse;
 import com.ethio_connect.youtubeintegration.exception.YouTubeApiException;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,28 @@ public class YouTubeApiClient {
                 /**
                  * Block since we're using it in a non-reactive service
                  */
+                .block();
+    }
+
+    public YouTubeResponse searchVideos(VideoSearchRequest request) {
+        return webClient.get()
+                .uri(uriBuilder -> {
+                    uriBuilder.path("/search")
+                            .queryParam("key", apiKey)
+                            .queryParam("part", "snippet")
+                            .queryParam("type", "video");
+
+                    // Expert Tip: Add filters only if they are present
+                    if (request.getQuery() != null) uriBuilder.queryParam("q", request.getQuery());
+                    if (request.getChannelId() != null) uriBuilder.queryParam("channelId", request.getChannelId());
+                    if (request.getOrder() != null) uriBuilder.queryParam("order", request.getOrder());
+                    if (request.getVideoDuration() != null) uriBuilder.queryParam("videoDuration", request.getVideoDuration());
+                    uriBuilder.queryParam("maxResults", request.getMaxResults() != null ? request.getMaxResults() : maxResults);
+
+                    return uriBuilder.build();
+                })
+                .retrieve()
+                .bodyToMono(YouTubeResponse.class)
                 .block();
     }
 }
