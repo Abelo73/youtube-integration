@@ -10,4 +10,5 @@ public class Snippet {
 
     private String title;
     private Thumbnails thumbnails;
+    private String description;
 }

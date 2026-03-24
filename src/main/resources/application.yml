@@ -1,60 +1,39 @@
-# ==============================
-# SERVER CONFIGURATION
-# ==============================
 server:
   port: 8080
+  servlet:
+    context-path: /youtube-integration
 
-# ==============================
-# SPRING CONFIGURATION
-# ==============================
 spring:
   application:
     name: youtube-integration
-
-  # Enable simple in-memory cache (can switch to Redis later)
   cache:
     type: simple
+  config:
+    import: "optional:classpath:.env"
 
-# ==============================
-# YOUTUBE API CONFIGURATION
-# ==============================
 youtube:
   api:
-    # NEVER hardcode your key here
-    key: ${YOUTUBE_API_KEY}
-
-    # Base URL for YouTube Data API
+    key: ${YOUTUBE_API_KEY} # Set this in your .env file
     base-url: https://www.googleapis.com/youtube/v3
-
-    # Number of results to fetch (1 = latest video)
     max-results: 1
 
-    # Optional: default channel (for testing)
-    default-channel-id: YOUR_CHANNEL_ID
+  channels:
+    - UCV3L1bFJs0Wn-Rmp9cVfPWg  # Replace with your channel ID
 
-# ==============================
-# LOGGING CONFIGURATION
-# ==============================
+app:
+  scheduler:
+    youtube:
+      interval: 300000 # 5 minutes
+
 logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.springframework.web.reactive.function.client: DEBUG   # logs WebClient calls
+    org.springframework.web.reactive.function.client: DEBUG
     com.ethio_connect.youtubeintegration: DEBUG
 
-# ==============================
-# MANAGEMENT (OPTIONAL - MONITORING)
-# ==============================
 management:
   endpoints:
     web:
       exposure:
         include: health,info
-
-# ==============================
-# CUSTOM CACHE CONFIG (OPTIONAL)
-# ==============================
-app:
-  cache:
-    youtube:
-      ttl: 300   # seconds (5 minutes)
