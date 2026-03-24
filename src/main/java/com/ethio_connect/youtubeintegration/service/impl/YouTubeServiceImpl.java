@@ -28,13 +28,19 @@ public class YouTubeServiceImpl implements YouTubeService {
     }
 
     @Override
-    public List<LatestVideoResponse> searchVideos(VideoSearchRequest request) {
-        log.info("Expert Search: Query='{}', Order='{}'", request.getQuery(), request.getOrder());
+    public SearchResponseDTO searchVideos(VideoSearchRequest request) {
+        log.info("Executing Search: Query='{}'", request.getQuery());
+
         YouTubeResponse response = apiClient.searchVideos(request);
 
-        return response.getItems().stream()
+        List<LatestVideoResponse> videoList = response.getItems().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+
+        return SearchResponseDTO.builder()
+                .videos(videoList)
+                .nextPageToken(response.getNextPageToken()) // Extract token here
+                .build();
     }
 
     private LatestVideoResponse mapToResponse(VideoItem item) {

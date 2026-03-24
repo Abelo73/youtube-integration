@@ -89,7 +89,7 @@ public class YouTubeApiClient {
                     if (request.getQuery() != null) uriBuilder.queryParam("q", request.getQuery());
                     if (request.getChannelId() != null) uriBuilder.queryParam("channelId", request.getChannelId());
                     if (request.getOrder() != null) uriBuilder.queryParam("order", request.getOrder());
-                    if (request.getVideoDuration() != null) uriBuilder.queryParam("videoDuration", request.getVideoDuration());
+//                    if (request.getVideoDuration() != null) uriBuilder.queryParam("videoDuration", request.getVideoDuration());
                     uriBuilder.queryParam("maxResults", request.getMaxResults() != null ? request.getMaxResults() : maxResults);
 
                     return uriBuilder.build();
