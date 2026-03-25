@@ -74,7 +74,6 @@ public class GlobalExceptionHandler {
                 .status(status.value())
                 .error(error)
                 .message(message)
-                // request.getDescription(false) returns "uri=/api/v1/..."
                 .path(request.getDescription(false).replace("uri=", ""))
                 .build();
 

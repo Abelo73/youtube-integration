@@ -6,7 +6,7 @@ import com.ethio_connect.youtubeintegration.service.YouTubeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils; // Fixes the &amp; issue
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class YouTubeServiceImpl implements YouTubeService {
 
         return SearchResponseDTO.builder()
                 .videos(videoList)
-                .nextPageToken(response.getNextPageToken()) // Extract token here
+                .nextPageToken(response.getNextPageToken())
                 .build();
     }
 
@@ -47,7 +47,7 @@ public class YouTubeServiceImpl implements YouTubeService {
         String videoId = item.getId().getVideoId();
         return LatestVideoResponse.builder()
                 .videoId(videoId)
-                .title(HtmlUtils.htmlUnescape(item.getSnippet().getTitle())) // Clean Title!
+                .title(HtmlUtils.htmlUnescape(item.getSnippet().getTitle()))
                 .description(item.getSnippet().getDescription())
                 .thumbnail(item.getSnippet().getThumbnails().getMedium().getUrl())
                 .videoUrl("https://www.youtube.com/watch?v=" + videoId)

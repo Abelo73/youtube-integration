@@ -9,6 +9,6 @@ import lombok.Data;
 public class VideoItem {
     private String kind;
     private String etag;
-    private Id id;           // Should contain videoId
-    private Snippet snippet; // Should contain title, description, thumbnails
+    private Id id;
+    private Snippet snippet;
 }

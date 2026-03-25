@@ -31,14 +31,14 @@ public class YouTubeController {
             @RequestParam(required = false) String channelId,
             @RequestParam(defaultValue = "relevance") String order,
             @RequestParam(defaultValue = "10") Integer maxResults,
-            @RequestParam(required = false) String pageToken) { // New Param
+            @RequestParam(required = false) String pageToken) {
 
         VideoSearchRequest request = VideoSearchRequest.builder()
                 .query(q)
                 .channelId(channelId)
                 .order(order)
                 .maxResults(maxResults)
-                .pageToken(pageToken) // Pass it to the request
+                .pageToken(pageToken)
                 .build();
 
         SearchResponseDTO searchResult = youtubeService.searchVideos(request);

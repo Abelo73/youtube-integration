@@ -15,7 +15,7 @@ public class BaseResponseDTO<T> {
     private LocalDateTime timestamp;
     private boolean success;
     private String message;
-    private String nextPageToken; // Essential for "Load More" features
+    private String nextPageToken;
     private T data;
 
     public static <T> BaseResponseDTO<T> ok(T data, String message) {

@@ -11,24 +11,52 @@ spring:
   config:
     import: "optional:classpath:.env"
 
+  # --- NEW: OAuth2 Security Configuration ---
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+              - https://www.googleapis.com/auth/youtube.readonly # Required for private playlists
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
 youtube:
   api:
-    key: ${YOUTUBE_API_KEY} # Set this in your .env file
+    key: ${YOUTUBE_API_KEY}
     base-url: https://www.googleapis.com/youtube/v3
     max-results: 1
-
   channels:
-    - UCV3L1bFJs0Wn-Rmp9cVfPWg  # Replace with your channel ID
+    - UCV3L1bFJs0Wn-Rmp9cVfPWg
 
 app:
   scheduler:
     youtube:
       interval: 300000 # 5 minutes
 
+# --- NEW: Swagger/OpenAPI Configuration ---
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+
 logging:
   level:
     root: INFO
     org.springframework.web: INFO
+    # Helpful for debugging OAuth2 and WebClient tokens
+    org.springframework.security: DEBUG
     org.springframework.web.reactive.function.client: DEBUG
     com.ethio_connect.youtubeintegration: DEBUG
 
@@ -36,4 +64,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,metrics

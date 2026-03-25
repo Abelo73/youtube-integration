@@ -10,5 +10,5 @@ public class VideoSearchRequest {
     private String channelId;
     private String order;
     private Integer maxResults;
-    private String pageToken; // Add this!
+    private String pageToken;
 }

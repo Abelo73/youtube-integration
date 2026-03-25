@@ -15,7 +15,7 @@ public class YouTubeResponse {
     private String kind;
     private String etag;
 
-    // These are the missing pieces for your ServiceImpl
+
     private String nextPageToken;
     private String prevPageToken;
 
